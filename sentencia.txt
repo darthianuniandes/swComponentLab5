@@ -1,0 +1,9 @@
+CREATE TABLE `test`.`tarjetacreditoalpes` (
+  `id` INT NOT NULL,
+  `numero` VARCHAR(45) NULL,
+  `nombre_titular` VARCHAR(100) NULL,
+  `nombre_banco` VARCHAR(45) NULL,
+  `cupo` DOUBLE NULL,
+  `fecha_expedicion` DATETIME NULL,
+  `fecha_vencimiento` DATETIME NULL,
+  PRIMARY KEY (`id`));
