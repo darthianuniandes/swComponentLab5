@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/src/java/com/losalpes/servicios/OrderManagerBean.java</file>
-            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/src/java/com/losalpes/excepciones/CreditValidationException.java</file>
+            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/src/java/com/losalpes/servicios/ServicioTCMock.java</file>
             <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/src/java/com/losalpes/servicios/ServicioPersistenciaDerby.java</file>
+            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/test/com/losalpes/servicios/PersistenciaCMTTest.java</file>
+            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/test/com/losalpes/servicios/PersistenciaBMTTest.java</file>
+            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/test/com/losalpes/servicios/ServicioVendedoresMockTest.java</file>
+            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/src/java/com/losalpes/servicios/PersistenciaBMT.java</file>
+            <file>file:/C:/Users/darthian/Documents/UNIANDES/swComponentLab5/Lab3-MueblesDeLosAlpes-ejb/test/com/losalpes/servicios/ServicioTCMockTest.java</file>
         </group>
     </open-files>
 </project-private>

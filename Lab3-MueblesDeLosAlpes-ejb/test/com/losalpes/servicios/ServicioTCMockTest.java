@@ -48,7 +48,7 @@ public class ServicioTCMockTest {
     public void testAgregarTC() throws Exception {
         TarjetaCredito tc = new TarjetaCredito();
         tc.setCupo((long) 100000);
-        tc.setId((long) 2);
+        tc.setId((long) 3);
         tc.setNombre("ISM");
         tc.setNumero("123");
         tc.setNombreBanco("Banco de los Alpes :v");

@@ -5,13 +5,26 @@
  */
 package com.losalpes.excepciones;
 
+import javax.ejb.ApplicationException;
+
 /**
  *
  * @author darthian
  */
+@ApplicationException(rollback = true)
 public class CupoInsuficienteException extends Exception {
+    
+    private String mensaje;
     
     public CupoInsuficienteException(String message) {
         super(message);
+    }
+    
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 }

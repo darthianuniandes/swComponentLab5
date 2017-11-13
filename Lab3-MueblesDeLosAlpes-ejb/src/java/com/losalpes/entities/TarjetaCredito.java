@@ -19,6 +19,8 @@ import java.sql.Timestamp;
 @Table(name="LAB4_TARJETA_CREDITO")
 public class TarjetaCredito implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+     
     @Id
     private Long id;
     

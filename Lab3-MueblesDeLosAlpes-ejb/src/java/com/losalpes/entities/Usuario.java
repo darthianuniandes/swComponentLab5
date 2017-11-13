@@ -147,7 +147,7 @@ public class Usuario implements Serializable {
         this.contraseña = contraseña;
         this.tipoUsuario = tipoUsuario;
         this.compras=new ArrayList<RegistroVenta>();
-    }
+    }   
 
     //-----------------------------------------------------------
     // Getters y setters
