@@ -123,8 +123,8 @@ public class PersistenciaBMT implements IPersistenciaBMTLocal, IPersistenciaBMTR
                 .setParameter("nombreTitular", usuario.getLogin()).getSingleResult();
         
         //se valida el cupo de la tarjeta 
-        System.out.println("PERRAS CUPO"+credito.getCupo());
-        System.out.println("PERRAS precio"+precioTotalInventario);
+        System.out.println("CUPO"+credito.getCupo());
+        System.out.println("precio"+precioTotalInventario);
         if (credito.getCupo() < precioTotalInventario) {
             userTransaction.rollback();
             throw new CupoInsuficienteException("Cupo Insufuciente para realizar la compra");   

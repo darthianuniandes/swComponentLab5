@@ -1,9 +1,42 @@
-CREATE TABLE `test`.`tarjetacreditoalpes` (
-  `id` INT NOT NULL,
-  `numero` VARCHAR(45) NULL,
-  `nombre_titular` VARCHAR(100) NULL,
-  `nombre_banco` VARCHAR(45) NULL,
-  `cupo` DOUBLE NULL,
-  `fecha_expedicion` DATETIME NULL,
-  `fecha_vencimiento` DATETIME NULL,
-  PRIMARY KEY (`id`));
+
+<!-- CREACION DE LA TABLA DE TARJETA DE CREDITO-->
+
+CREATE TABLE LAB4_TARJETA_CREDITO (
+ID BIGINT NOT NULL, 
+CUPO BIGINT, 
+FECHAEXP TIMESTAMP, 
+FECHAVEN TIMESTAMP, 
+NOMBREBANCO VARCHAR(255), 
+NOMBRETITULAR VARCHAR(255), 
+NUMERO VARCHAR(255), 
+PRIMARY KEY (ID));
+
+<!-- INSERCION DE DATOS DE TARJETA DE CREDITO-->
+INSERT INTO APP.LAB4_TARJETA_CREDITO (ID, CUPO, FECHAEXP, FECHAVEN, NOMBREBANCO, NOMBRETITULAR, NUMERO) 
+	VALUES (1, 10000000, '2017-11-13 12:19:11.718', '2017-11-13 12:19:08.878', 'Banco de los Alpes :v', 'batman', '456789123789');
+	
+	
+<!-- CREACION DE POOL DE CONEXIONES Y DATA SOURCES PARA LAS BASES DE DATOS-->
+	
+<!--DERBY POOL-->	
+create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname oracle.jdbc.pool.OracleDataSource --property "user=app:password=app: url=jdbc\\:oracle\\:thin\\:@localhost\\:1521\\:xe" lab5_pool
+<!--DERBY JDBC-->	
+create-jdbc-resource --connectionpoolid lab5_pool jdbc/MuebleDeLosAlpesLab5
+
+
+<!--UNIANDES_DB POOL-->	
+create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname oracle.jdbc.pool.OracleDataSource --property "user=CSOF5302031720:password=cumucEFr8TUf: url=jdbc\\:oracle\\:thin\\:@fn3.oracle.virtual.uniandes.edu.co\\:1521\\:prod" lab5_uniandes_pool2
+<!--UNIANDES_DB JDBC-->	
+create-jdbc-resource --connectionpoolid lab5_uniandes_pool2 jdbc/MuebAlpesOracleUniLab5
+
+
+
+
+<!-- INSERCION DE DATOS EN LA TABLA DE MUEBLES -->
+INSERT INTO APP.LAB4_MUEBLE (REFERENCIA, CANTIDAD, DESRIPCION, IMAGEN, NOMBRE, PRECIO, REG_VENTA, SELECCION, TIPO) 
+	VALUES (1, 1, 'Una confortable silla con estilo del siglo XIX.', '', 'Silla clásica', 123.0, NULL, 0, 'Interior');
+INSERT INTO APP.LAB4_MUEBLE (REFERENCIA, CANTIDAD, DESRIPCION, IMAGEN, NOMBRE, PRECIO, REG_VENTA, SELECCION, TIPO) 
+	VALUES (2, 1, 'Lo último en la moda de interiores. Esta silla le brindará la comodidad e innovación que busca', '', 'Silla moderna', 5464.0, NULL, 0, 'Interior');
+INSERT INTO APP.LAB4_MUEBLE (REFERENCIA, CANTIDAD, DESRIPCION, IMAGEN, NOMBRE, PRECIO, REG_VENTA, SELECCION, TIPO) 
+	VALUES (3, 1, 'Una bella mesa para comidas y reuniones al aire libre.', '', 'Mesa de jardín', 4568.0, NULL, 0, 'Exterior');
+
