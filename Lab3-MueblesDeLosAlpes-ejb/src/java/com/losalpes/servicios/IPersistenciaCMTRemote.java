@@ -10,15 +10,14 @@ import com.losalpes.entities.Usuario;
 import com.losalpes.entities.Vendedor;
 import com.losalpes.excepciones.CupoInsuficienteException;
 import java.util.ArrayList;
-import javax.ejb.Local;
 import javax.ejb.Remote;
 
 /**
  *
  * @author darthian
  */
-@Local
-public interface IPersistenciaCMTLocal {
+@Remote
+public interface IPersistenciaCMTRemote {
     
     public void insertRemoteDatabase(Vendedor vendedor);
     

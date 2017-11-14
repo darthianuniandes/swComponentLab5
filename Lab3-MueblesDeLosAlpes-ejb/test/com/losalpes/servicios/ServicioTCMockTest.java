@@ -49,7 +49,7 @@ public class ServicioTCMockTest {
         TarjetaCredito tc = new TarjetaCredito();
         tc.setCupo((long) 100000);
         tc.setId((long) 3);
-        tc.setNombre("ISM");
+        tc.setNombreTitular("batman");
         tc.setNumero("123");
         tc.setNombreBanco("Banco de los Alpes :v");
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

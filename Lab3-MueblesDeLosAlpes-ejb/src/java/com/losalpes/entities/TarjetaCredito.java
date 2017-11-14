@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -17,6 +20,9 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="LAB4_TARJETA_CREDITO")
+@XmlRootElement
+@NamedQueries({@NamedQuery(name = "TarjetaCredito.findAll", query = "SELECT t FROM TarjetaCredito t"),
+    @NamedQuery(name = "TarjetaCredito.findByNombreTitular", query = "SELECT t FROM TarjetaCredito t WHERE t.nombreTitular = :nombreTitular")})
 public class TarjetaCredito implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,14 +58,6 @@ public class TarjetaCredito implements Serializable {
         this.numero = numero;
     }
 
-    public String getNombre() {
-        return nombreTitular;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombreTitular = nombre;
-    }
-
     public Long getCupo() {
         return cupo;
     }
@@ -90,5 +88,13 @@ public class TarjetaCredito implements Serializable {
 
     public void setFechaVen(Timestamp fechaVen) {
         this.fechaVen = fechaVen;
+    }
+    
+    public String getNombreTitular() {
+        return nombreTitular;
+    }
+
+    public void setNombreTitular(String nombreTitular) {
+        this.nombreTitular = nombreTitular;
     }
 }

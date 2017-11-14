@@ -14,16 +14,17 @@ import com.losalpes.excepciones.CupoInsuficienteException;
 import com.losalpes.excepciones.OperacionInvalidaException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.RollbackException;
@@ -43,10 +44,7 @@ public class PersistenciaBMT implements IPersistenciaBMTLocal, IPersistenciaBMTR
     
     @Resource
     private UserTransaction userTransaction;
-    
-    @Resource
-    private SessionContext context;
-    
+
     @PersistenceContext(unitName = "Lab3-MueblesDeLosAlpes-ejbPU")
     private EntityManager entityDerby;
     
@@ -54,61 +52,62 @@ public class PersistenciaBMT implements IPersistenciaBMTLocal, IPersistenciaBMTR
     private IServicioPersistenciaMockLocal persistencia;
 
     @Override
-    public void insertRemoteDatabase(Vendedor vendedor) {
-       
+    public void insertRemoteDatabase(Vendedor vendedor) {       
         try {
             persistencia.create(vendedor);
         } catch (OperacionInvalidaException ex) {
             Logger.getLogger(PersistenciaBMT.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
     }
     
     @Override
     public void deleteRemoteDatabase(Vendedor vendedor) {
+        
         try {
             persistencia.delete(vendedor);
         } catch (OperacionInvalidaException ex) {
-            try {        
-                userTransaction.setRollbackOnly();
-            } catch (IllegalStateException ex1) {
-                Logger.getLogger(PersistenciaBMT.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (SystemException ex1) {
-                Logger.getLogger(PersistenciaBMT.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            Logger.getLogger(PersistenciaBMT.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     
     @Override
     public void comprar(Usuario usuario, ArrayList<Mueble> inventario, double precioTotalInventario) 
             throws CupoInsuficienteException {
         try {
-            userTransaction.begin();
+            Context context = new InitialContext();
+            userTransaction = (UserTransaction) context.lookup("java:comp/UserTransaction");
             
+            userTransaction.begin();
+            System.out.println("ISM INICIA TRANSACCION");
             this.registrarVenta(usuario, inventario);
             this.validarCupoTarjeta(usuario, precioTotalInventario);
             
             userTransaction.commit();       
         
-    }   catch (RollbackException | HeuristicMixedException 
+        }   catch (RollbackException | HeuristicMixedException 
             | HeuristicRollbackException | SecurityException
             | IllegalStateException | NotSupportedException 
             | SystemException | javax.transaction.RollbackException ex) {
+            Logger.getLogger(PersistenciaBMT.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NamingException ex) {
             Logger.getLogger(PersistenciaBMT.class.getName()).log(Level.SEVERE, null, ex);
         }        
     }
     
     private void registrarVenta(Usuario usuario, ArrayList<Mueble> inventario) {
-        Mueble mueble;
-        for (int i = 0; i < inventario.size(); i++)
-        {
-            mueble = inventario.get(i);
-            Mueble editar=(Mueble) persistencia.findById(Mueble.class, mueble.getReferencia());
+        System.out.println("ISM REGISTRO VENTA");
+        for (Mueble mueble : inventario) {
+            Mueble editar = (Mueble) persistencia.findById(Mueble.class, mueble.getReferencia());
             editar.setCantidad(editar.getCantidad() - mueble.getCantidad());
             RegistroVenta compra = new RegistroVenta(new Date(System.currentTimeMillis()), 
                     mueble, mueble.getCantidad(), null, usuario);
+            Random rand = new Random();
+            int  n = rand.nextInt(50) + 1;
+            System.out.println("ISM ID"+n);
+            compra.setId((long) n);
             usuario.agregarRegistro(compra);
-
+            System.out.println("ISM ACTUALIZA");
             persistencia.update(usuario);
             persistencia.update(editar);
         }
@@ -116,12 +115,16 @@ public class PersistenciaBMT implements IPersistenciaBMTLocal, IPersistenciaBMTR
     
     private void validarCupoTarjeta(Usuario usuario, double precioTotalInventario) 
             throws CupoInsuficienteException, IllegalStateException, SecurityException, SystemException {
+        System.out.println("ISM INICIA VALIDA CUPO");
+        System.out.println("ISM LOGIN:"+usuario.getLogin());
         
-        TarjetaCredito credito = (TarjetaCredito)entityDerby.createNamedQuery(
-                "Tarjetacreditoalpes.findByDocumentoTitular")
-                .setParameter("documentoTitular", new Double(usuario.getDocumento())).getSingleResult();
+        TarjetaCredito credito = (TarjetaCredito) entityDerby.createNamedQuery(
+                "TarjetaCredito.findByNombreTitular")
+                .setParameter("nombreTitular", usuario.getLogin()).getSingleResult();
         
         //se valida el cupo de la tarjeta 
+        System.out.println("PERRAS CUPO"+credito.getCupo());
+        System.out.println("PERRAS precio"+precioTotalInventario);
         if (credito.getCupo() < precioTotalInventario) {
             userTransaction.rollback();
             throw new CupoInsuficienteException("Cupo Insufuciente para realizar la compra");   

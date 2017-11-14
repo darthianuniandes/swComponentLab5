@@ -18,8 +18,6 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
@@ -31,7 +29,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class PersistenciaCMT implements IPersistenciaCMTLocal {
+public class PersistenciaCMT implements IPersistenciaCMTLocal, IPersistenciaCMTRemote{
     @Resource
     private SessionContext context;
     
@@ -41,6 +39,7 @@ public class PersistenciaCMT implements IPersistenciaCMTLocal {
     @PersistenceContext(unitName = "Lab3-MueblesDeLosAlpes-ejbPU")
     private EntityManager entityDerby;
 
+    @Override
     public void insertRemoteDatabase(Vendedor vendedor) {
         try {
             persistencia.create(vendedor);
@@ -49,6 +48,7 @@ public class PersistenciaCMT implements IPersistenciaCMTLocal {
         }
     }
     
+    @Override
     public void deleteRemoteDatabase(Vendedor vendedor) {
         try {
             persistencia.delete(vendedor);
