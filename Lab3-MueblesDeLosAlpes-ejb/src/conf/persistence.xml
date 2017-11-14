@@ -10,8 +10,8 @@
   </persistence-unit>
   
   <persistence-unit name="Lab3-MueblesDeLosAlpes-ejbPU2" transaction-type="JTA">
-    <!--<jta-data-source>jdbc/MuebAlpesOracleUniLab5</jta-data-source>-->
-    <jta-data-source>jdbc/MuebleDeLosAlpesLab5</jta-data-source>
+    <jta-data-source>jdbc/MuebAlpesOracleUniLab5</jta-data-source>
+    <!--<jta-data-source>jdbc/MuebleDeLosAlpesLab5</jta-data-source>-->
     <class>com.losalpes.entities.Ciudad</class>
     <class>com.losalpes.entities.ExperienciaVendedor</class>
     <class>com.losalpes.entities.Mueble</class>
